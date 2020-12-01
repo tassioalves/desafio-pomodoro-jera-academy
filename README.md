@@ -1,4 +1,4 @@
-# front-projeto-jera-academy
+# desafio-pomodoro-jera-academy
 
 ## Project setup
 ```
