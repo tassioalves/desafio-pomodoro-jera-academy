@@ -89,7 +89,7 @@
                                 }
                             } else {
                                 this.$store.commit('setQtdePausas', ++qtdePausas);
-                                this.$store.commit('setTimePausa', 1);
+                                this.$store.commit('setTimePausa', "00:02");
                                 this.chargeTimePomodoro();
                             }
 

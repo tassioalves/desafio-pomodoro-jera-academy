@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-//import cardTimer from '../app/components/cardTimer'
 import pomodoro from "../app/view/pomodoro";
+import formVisitant from "../app/components/formVisitant/formVisitant";
 
 
 
@@ -12,6 +12,11 @@ const routes = [
         path: '/',
         name: 'pomodoro',
         component: pomodoro,
+    },
+    {
+        path: '/1',
+        name: 'formVis',
+        component: formVisitant,
     }
 ];
 const router = new VueRouter({
