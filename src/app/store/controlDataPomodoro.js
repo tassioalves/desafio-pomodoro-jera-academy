@@ -1,25 +1,29 @@
 export default {
     state: {
         nameUser: "Visitante",
-        timePomodoro: 1,
+        minutePomodoro: "00:05",
         secondPomodoro: 0,
-        timePausa: 2,
+        timePausa: "00:02",
+        timePauseBig:"00:10",
         proximaPausa:4,
-        qtdePomodoros: 0,
-        qtdePausas: 0
+        qtdePomodoros: "0",
+        qtdePausas: "0"
     },
     getters: {
         getNameUser: (state) => {
             return state.nameUser;
         },
-        getTimePomodoro: (state) => {
-            return state.timePomodoro;
+        getMinutePomodoro: (state) => {
+            return state.minutePomodoro;
         },
         getSecondPomodoro: (state) => {
             return state.secondPomodoro;
         },
         getTimePausa: (state) => {
             return state.timePausa;
+        },
+        gettimePauseBig:(state)=>{
+          return state.timePauseBig;
         },
         getProximaPausa:(state)=>{
           return state.proximaPausa;
@@ -35,8 +39,8 @@ export default {
         setNameUser: (state, nameUser) => {
             state.nameUser = nameUser;
         },
-        setTimePomodoro: (state, timePomodoro) => {
-            state.timePomodoro = timePomodoro;
+        setMinutePomodoro: (state, minutePomodoro) => {
+            state.minutePomodoro = minutePomodoro;
         },
         setSecondPomodoro: (state, secondPomodoro) => {
             state.secondPomodoro = secondPomodoro;
@@ -58,8 +62,8 @@ export default {
         setNameUser({commit}, nameUser) {
             commit('setNameUser', nameUser);
         },
-        setTimePomodoro({commit}, timePomodoro) {
-            commit('setTimePomodoro', timePomodoro);
+        setMinutePomodoro({commit}, minutePomodoro) {
+            commit('setMinutePomodoro', minutePomodoro);
         },
         setSecondPomodoro({commit}, secondPomodoro) {
             commit('setSecondPomodoro', secondPomodoro);

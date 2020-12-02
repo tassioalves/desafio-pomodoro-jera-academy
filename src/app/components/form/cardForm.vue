@@ -1,5 +1,5 @@
 <template>
-    <v-card elevation="10" max-width="500" color="#FFFFFF" >
+    <v-card elevation="10" max-width="500" height="220" color="#FFFFFF" >
         <formm></formm>
     </v-card>
 </template>

@@ -1,8 +1,9 @@
 <template>
-    <v-card-text>
-        <p class="text--primary text-center timer">
+    <v-card-text  align="center" >
+        <v-col class="display-4" cols="12">
             {{ time | prettify }}
-        </p>
+        </v-col>
+
     </v-card-text>
 </template>
 
@@ -29,7 +30,6 @@
 
 <style scoped>
     .timer {
-        font-size: 8em;
-        margin: 60px;
+        margin-top: 20px;
     }
 </style>
