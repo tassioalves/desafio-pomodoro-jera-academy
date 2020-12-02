@@ -9,16 +9,17 @@
                         lazy-validation
                 >
                     <v-text-field
-                            v-model="name"
+                            v-model="nameVisitant"
                             label="Name"
                             required
                     ></v-text-field>
 
                     <v-btn
-
-                            color="warning"
+                            @click="saveUser"
+                            color="green"
+                            dark
                     >
-                        Reset Validation
+                        COMEÇAR
                     </v-btn>
 
 
@@ -30,8 +31,24 @@
 </template>
 
 <script>
+
     export default {
-        name: "formVisitant"
+        name: "formVisitant",
+        data() {
+            return {
+                nameVisitant: null
+            }
+        },
+        methods: {
+            saveUser() {
+                if (this.nameVisitant === null) {
+                    this.$router.push("/pomodoro");
+                } else {
+                    this.$store.commit('setNameUser', this.nameVisitant);
+                    this.$router.push("/pomodoro");
+                }
+            }
+        }
     }
 </script>
 

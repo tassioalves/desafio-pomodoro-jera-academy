@@ -20,8 +20,8 @@
 </template>
 
 <script>
-    import cardTimer from "../components/timer/cardTimer";
-    import cardForm from "../components/form/cardForm";
+    import cardTimer from "../components/timer/timer";
+    import cardForm from "../components/form/form";
 
     export default {
         name: "pomodoro",

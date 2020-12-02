@@ -1,78 +1,65 @@
 export default {
     state: {
         nameUser: "Visitante",
-        minutePomodoro: "00:05",
+        timePomodoro: "00:05",
         secondPomodoro: 0,
-        timePausa: "00:02",
-        timePauseBig:"00:10",
-        proximaPausa:4,
+        timePause: "00:02",
+        nextPause: 4,
         qtdePomodoros: "0",
-        qtdePausas: "0"
+        qtdePauses: "0"
     },
     getters: {
         getNameUser: (state) => {
             return state.nameUser;
         },
-        getMinutePomodoro: (state) => {
-            return state.minutePomodoro;
+        getTimePomodoro: (state) => {
+            return state.timePomodoro;
         },
-        getSecondPomodoro: (state) => {
-            return state.secondPomodoro;
+        getTimePause: (state) => {
+            return state.timePause;
         },
-        getTimePausa: (state) => {
-            return state.timePausa;
-        },
-        gettimePauseBig:(state)=>{
-          return state.timePauseBig;
-        },
-        getProximaPausa:(state)=>{
-          return state.proximaPausa;
+        getNextPause: (state) => {
+            return state.nextPause;
         },
         getQtdePomodoros: (state) => {
             return state.qtdePomodoros;
         },
-        getQtdePausas: (state) => {
-            return state.qtdePausas;
+        getQtdePauses: (state) => {
+            return state.qtdePauses;
         }
     },
     mutations: {
         setNameUser: (state, nameUser) => {
             state.nameUser = nameUser;
         },
-        setMinutePomodoro: (state, minutePomodoro) => {
-            state.minutePomodoro = minutePomodoro;
+        setTimePomodoro: (state, timePomodoro) => {
+            state.timePomodoro = timePomodoro;
         },
-        setSecondPomodoro: (state, secondPomodoro) => {
-            state.secondPomodoro = secondPomodoro;
+        setTimePause: (state, timePause) => {
+            state.timePause = timePause;
         },
-        setTimePausa: (state, timePausa) => {
-            state.timePausa = timePausa;
-        },
-        setProximaPausa:(state, proximaPausa)=>{
-          state.proximaPausa = proximaPausa;
+        setNextPause: (state, nextPause) => {
+            state.nextPause = nextPause;
         },
         setQtdePomodoros: (state, qtdePomodoros) => {
             state.qtdePomodoros = qtdePomodoros;
         },
-        setQtdePausas: (state, qtdePausas) => {
-            state.qtdePausas = qtdePausas;
+        setQtdePauses: (state, qtdePauses) => {
+            state.qtdePauses = qtdePauses;
         }
     },
     actions: {
         setNameUser({commit}, nameUser) {
             commit('setNameUser', nameUser);
         },
-        setMinutePomodoro({commit}, minutePomodoro) {
-            commit('setMinutePomodoro', minutePomodoro);
-        },
-        setSecondPomodoro({commit}, secondPomodoro) {
-            commit('setSecondPomodoro', secondPomodoro);
+        setTimePomodoro({commit}, timePomodoro) {
+            commit('setTimePomodoro', timePomodoro);
         },
         setTimePausa({commit}, timePausa) {
             commit('setTimePausa', timePausa);
         },
-        setProximaPausa({commit}, proximaPausa){
-            commit('setProximaPausa', proximaPausa);
+        setNextPause({commit}, nextPause) {
+            commit('setNextPause', nextPause);
         },
         setQtdePomodoros({commit}, qtdePomodoros) {
             commit('setQtdePomodoros', qtdePomodoros);

@@ -9,12 +9,12 @@ Vue.use(VueRouter);
 
 const routes = [
     {
-        path: '/',
+        path: '/pomodoro',
         name: 'pomodoro',
         component: pomodoro,
     },
     {
-        path: '/1',
+        path: '/',
         name: 'formVis',
         component: formVisitant,
     }
