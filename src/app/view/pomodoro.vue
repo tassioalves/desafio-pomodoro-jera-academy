@@ -9,19 +9,19 @@
                 </v-card-text>
             </v-col>
             <v-col cols="12" md="6">
-                <card-timer/>
+                <timer></timer>
             </v-col>
 
             <v-col cols="12" md="6">
-                <card-form/>
+                <form1 v-on:chargeNewTimePomodoro="chargeNewTimePomodoro"></form1>
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script>
-    import cardTimer from "../components/timer/timer";
-    import cardForm from "../components/form/form";
+    import timer from "../components/timer";
+    import form from "../components/form";
 
     export default {
         name: "pomodoro",
@@ -31,12 +31,17 @@
             }
         },
         components: {
-            cardForm: cardForm,
-            cardTimer: cardTimer,
+            form1: form,
+            timer: timer,
         },
         computed: {
             getNameUser() {
                 return this.$store.getters.getNameUser;
+            }
+        },
+        methods: {
+            chargeNewTimePomodoro() {
+                return true;
             }
         }
     }

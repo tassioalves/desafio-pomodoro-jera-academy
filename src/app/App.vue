@@ -1,6 +1,8 @@
 <template>
     <div id="app">
         <v-app>
+            <!-- Barra superior e menu lateral (Menu) -->
+          <barra-superior></barra-superior>
             <v-content>
                 <v-container fluid>
                     <router-view></router-view>
@@ -11,11 +13,15 @@
 </template>
 
 <script>
+    import BarraSuperior from "./components/barraSuperior";
 
     export default {
         name: 'App',
         data() {
             return {}
+        },
+        components:{
+            BarraSuperior
         }
     }
 </script>

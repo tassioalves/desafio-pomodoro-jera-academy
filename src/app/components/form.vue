@@ -1,20 +1,19 @@
 <template>
-    <v-card elevation="10" max-width="500" height="220" color="#FFFFFF">
+    <v-card elevation="10" max-width="500" height="240" color="#FFFFFF">
         <div class="container">
             <v-row>
-                <v-col cols="12" md="6">
+                <v-col cols="6" lg="6">
                     <v-form ref="form">
-                        <v-text-field type="time" v-model="newMinutePomodoro"
+                        <v-text-field type="time" v-model="newTimePomodoro"
                                       label="Minutos do Pomodoro"></v-text-field>
                         <v-btn rounded small color="green" dark class="float-right" @click="saveNewTimePomodoro">
                             Salvar
                         </v-btn>
                     </v-form>
                 </v-col>
-                <v-col cols="12" md="6">
-                        Pomodoros: {{pomodoros}} <br>
-                        Pausas: {{pauses}} <br>
-                        Proxima Pausa: {{nextPause}} <br>
+                <v-col cols="6" lg="6" class="display-1">
+                    Pomodoros: {{pomodoros}} <br>
+                    Pausas: {{pauses}} <br>
                 </v-col>
             </v-row>
         </div>
@@ -26,16 +25,13 @@
         name: "formm",
         data() {
             return {
-                newMinutePomodoro: Object,
-                newSecondPomodoro: Object
+                newTimePomodoro: Object
             }
         },
         methods: {
             saveNewTimePomodoro() {
-                this.$store.commit('setMinutePomodoro', this.newMinutePomodoro);
-                this.$store.commit('setSecondPomodoro', this.newSecondPomodoro);
-                this.newMinutePomodoro = Object;
-                this.newSecondPomodoro = Object;
+                this.$store.commit('setTimePomodoro', this.newTimePomodoro);
+                this.newTimePomodoro = Object;
             }
         },
         computed: {

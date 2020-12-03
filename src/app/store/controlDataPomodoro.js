@@ -1,9 +1,8 @@
 export default {
     state: {
         nameUser: "Visitante",
-        timePomodoro: "00:05",
-        secondPomodoro: 0,
-        timePause: "00:02",
+        timePomodoro: "25:00",
+        timePause: "05:00",
         nextPause: 4,
         qtdePomodoros: "0",
         qtdePauses: "0"
@@ -55,8 +54,8 @@ export default {
         setTimePomodoro({commit}, timePomodoro) {
             commit('setTimePomodoro', timePomodoro);
         },
-        setTimePausa({commit}, timePausa) {
-            commit('setTimePausa', timePausa);
+        setTimePause({commit}, timePause) {
+            commit('setTimePause', timePause);
         },
         setNextPause({commit}, nextPause) {
             commit('setNextPause', nextPause);
@@ -64,7 +63,7 @@ export default {
         setQtdePomodoros({commit}, qtdePomodoros) {
             commit('setQtdePomodoros', qtdePomodoros);
         },
-        setQtdePausas({commit}, qtdePausas) {
+        setQtdePauses({commit}, qtdePausas) {
             commit('setQtdePausas', qtdePausas)
         }
     }

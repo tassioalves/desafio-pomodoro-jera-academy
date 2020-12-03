@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import pomodoro from "../app/view/pomodoro";
-import formVisitant from "../app/components/formVisitant/formVisitant";
+import formVisitant from "../app/components/formVisitant";
 
 
 

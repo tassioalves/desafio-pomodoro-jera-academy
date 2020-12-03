@@ -1,9 +1,9 @@
 <template>
-    <v-card elevation="10" max-width="500" height="220" color="#FFFFFF">
-        <v-card-text align="center">
-            <v-col class="display-4" cols="12">
+    <v-card elevation="10" max-width="500" height="240" color="#FFFFFF">
+        <v-card-title>{{cardTitle}}</v-card-title>
+        <v-card-text align="center" class="display-4">
+
                 {{ timeFormat}}
-            </v-col>
 
         </v-card-text>
         <v-card-actions>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import sound from '../../assets/coock.mp3';
+    import sound from '../assets/coock.mp3';
 
     export default {
         name: "viewTimer",
@@ -28,7 +28,8 @@
                 secondes: 0,
                 time: 0,
                 timer: null,
-                sound: new Audio(sound)
+                sound: new Audio(sound),
+                cardTitle: null
             }
         },
         mounted() {
@@ -39,7 +40,6 @@
                 let time = this.time / 60;
                 let minutes = parseInt(time);
                 let secondes = Math.round((time - minutes) * 60);
-
 
                 if (minutes < 10) {
                     minutes = "0" + minutes
@@ -52,6 +52,7 @@
         },
         methods: {
             chargeTimePomodoro() {
+                this.cardTitle = "Pomodoro";
                 let timePomodoro = this.$store.getters.getTimePomodoro;
                 let split = timePomodoro.split(':');
                 this.minutes = split[0];
@@ -59,6 +60,7 @@
                 this.time = ((parseInt(this.minutes) * 60) + parseInt(this.secondes))
             },
             chargeTimePause() {
+                this.cardTitle = "Pausa";
                 let timePausa = this.$store.getters.getTimePause;
                 let split = timePausa.split(':');
                 this.minutes = split[0];
@@ -91,10 +93,9 @@
                                 }
                             } else {
                                 this.$store.commit('setQtdePauses', ++qtdePauses);
-                                this.$store.commit('setTimePause', "00:02");
+                                this.$store.commit('setTimePause', "05:00");
                                 this.chargeTimePomodoro();
                             }
-
                         }
                     }, 1000)
                 }
@@ -111,7 +112,6 @@
         }
     }
 </script>
-
 <style scoped>
 
 </style>
