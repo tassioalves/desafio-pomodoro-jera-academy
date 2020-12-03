@@ -40,16 +40,11 @@
             },
             pomodoros() {
                 return this.$store.getters.getQtdePomodoros;
-            },
-            nextPause() {
-                return this.$store.getters.getNextPause;
             }
         }
     }
 </script>
 
 <style scoped>
-    .container {
-        margin: 0px;
-    }
+
 </style>

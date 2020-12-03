@@ -4,8 +4,8 @@ export default {
         timePomodoro: "25:00",
         timePause: "05:00",
         nextPause: 4,
-        qtdePomodoros: "0",
-        qtdePauses: "0"
+        qtdePomodoros: 0,
+        qtdePauses: 0
     },
     getters: {
         getNameUser: (state) => {
