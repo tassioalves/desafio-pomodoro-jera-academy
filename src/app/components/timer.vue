@@ -1,9 +1,7 @@
 <template>
     <v-card elevation="10" max-width="500" height="240" color="#FFFFFF">
-
         <v-btn v-if="showButtonPomodoro" depressed class="ma-2" @click="setPomodoro">Pomodoro</v-btn>
         <v-btn v-if="showButtonPause" depressed class="ma-2" @click="setPause">Pausa</v-btn>
-
         <v-card-text align="center" class="display-4">
             {{ timeFormat}}
         </v-card-text>
@@ -58,17 +56,6 @@
             }
         },
         methods: {
-            notification() {
-                Push.create("SEU TEMPO ACABOU!", {
-                    body: "Realize suas tarefas de uma forma mais organizada!",
-                    icon: iconPomodoro,
-                    timeout: 5000,
-                    onClick: function () {
-                        window.focus();
-                        this.close();
-                    }
-                });
-            },
             start() {
                 this.isRunning = true;
                 if (!this.timer) {
@@ -127,6 +114,17 @@
                     this.setPause();
                 }
             },
+            notification() {
+                Push.create("SEU TEMPO ACABOU!", {
+                    body: "Realize suas tarefas de uma forma mais organizada!",
+                    icon: iconPomodoro,
+                    timeout: 5000,
+                    onClick: function () {
+                        window.focus();
+                        this.close();
+                    }
+                });
+            },
             setPomodoro() {
                 this.isRunningPomodoro = true;
                 this.isRunningPause = false;
@@ -137,8 +135,8 @@
                 this.time = ((parseInt(this.minutes) * 60) + parseInt(this.secondes))
             },
             setPause() {
-                this.isRunningPause = true;
                 this.isRunningPomodoro = false;
+                this.isRunningPause = true;
                 let timePausa = this.$store.getters.getTimePause;
                 let split = timePausa.split(':');
                 this.minutes = split[0];
