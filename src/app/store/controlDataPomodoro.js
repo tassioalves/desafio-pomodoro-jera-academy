@@ -1,8 +1,8 @@
 export default {
     state: {
-        timePomodoro: "00:05",
-        timePause: "00:02",
-        timeLongPause: "00:05",
+        timePomodoro: "25:00",
+        timePause: "05:00",
+        timeLongPause: "10:00",
         nextPause: 4,
         qtdePomodoros: 0,
         qtdePauses: 0,
