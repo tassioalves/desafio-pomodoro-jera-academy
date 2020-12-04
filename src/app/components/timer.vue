@@ -3,27 +3,31 @@
         <div class="text-center">
             <v-btn :disabled="showButtonPomodoro" @click="setPomodoro" class="ma-2"
                    color="primary"
-                   outlined rounded>
+                   :outlined="!isPomodoro"
+                   rounded>
                 Pomodoro
             </v-btn>
             <v-btn :disabled="showButtonPause" @click="setPause" class="ma-2"
                    color="primary"
-                   outlined rounded>
+                   :outlined="!isPause"
+                   rounded>
                 Pausa
             </v-btn>
             <v-btn :disabled="showButtonLongPause" @click="setLongPause" class="ma-2"
                    color="primary"
-                   outlined rounded>
+                   :outlined="!isLongPause"
+                   rounded>
                 Longa Pausa
             </v-btn>
             <v-card-text align="center" class="display-4">
-                {{ timeFormat}}
-
+                {{mostrarTimer}}
             </v-card-text>
             <div class="ma-6">
                 <v-btn rounded color="red" dark class="ma-2" @click="stop"> Parar</v-btn>
-                <v-btn rounded color="orange" v-if="isRunning" dark class="ma-2" @click="pause"> Pausar</v-btn>
-                <v-btn rounded color="green" v-if="!isRunning" dark class="ma-2" @click="start"> Começar</v-btn>
+                <v-btn rounded color="orange" v-if="!isRunningButtonPause" dark class="ma-2" @click="pause"> Pausar
+                </v-btn>
+                <v-btn rounded color="green" v-if="isRunningButtonPause" dark class="ma-2" @click="startTime"> Começar
+                </v-btn>
             </div>
         </div>
     </v-card>
@@ -32,21 +36,21 @@
 <script>
     import iconPomodoro from '../assets/iconPomodoro.png';
     import Push from 'push.js';
+    import Timer from 'easytimer.js';
 
     export default {
         name: "Timer",
         components: {},
         data() {
             return {
-                isRunning: false,
                 isRunningPomodoro: false,
                 isRunningPause: false,
                 isRunningLongPause: false,
                 isPomodoro: false,
                 isPause: false,
                 isLongPause: false,
-                timeInSeconds: 0,
-                timerInterval: null
+                isRunningButtonPause: true,
+                mostrarTimer: ""
             }
         },
         props: {},
@@ -54,18 +58,6 @@
             this.setPomodoro();
         },
         computed: {
-            timeFormat() {
-                let time = this.timeInSeconds / 60;
-                let minutes = parseInt(time);
-                let secondes = Math.round((time - minutes) * 60);
-                if (minutes < 10) {
-                    minutes = "0" + minutes
-                }
-                if (secondes < 10) {
-                    secondes = "0" + secondes
-                }
-                return minutes + ":" + secondes
-            },
             showButtonPomodoro() {
                 return this.isRunningPause || this.isRunningLongPause;
             },
@@ -75,53 +67,116 @@
             showButtonLongPause() {
                 return this.isRunningPomodoro || this.isRunningPause;
             }
+
         },
         methods: {
-            start() {
-                this.isRunning = true;
+            startTime() {
+                this.isRunningButtonPause = false;
                 this.$store.commit('setIsRunning', true);
 
-                if (!this.timerInterval) {
+                if (this.isPomodoro) {
+                    this.isRunningPomodoro = true;
+                } else if (this.isPause) {
+                    this.isRunningPause = true;
+                } else if (this.isLongPause) {
+                    this.isRunningLongPause = true;
+                }
 
-                    //Verifica qual Time será executado
-                    if (this.isPomodoro) {
-                        this.isRunningPomodoro = true;
-                    } else if (this.isPause) {
-                        this.isRunningPause = true;
-                    } else if (this.isLongPause) {
-                        this.isRunningLongPause = true;
+                this.easyTimer.start();
+
+                //EXECUTA DURANTE A CONTAGEM!
+                this.easyTimer.addEventListener('secondsUpdated', () => {
+                    this.mostrarTimer = this.easyTimer.getTimeValues().toString(['minutes', 'seconds']);
+                });
+
+                //EXECUTA QUANDO O TEMPO ACABAR!
+                this.easyTimer.addEventListener('targetAchieved', () => {
+                    this.notification();
+
+                    //VERIFICA QUAL TIMER ACABOU DE SER EXECUTADO!
+                    if (this.isRunningPomodoro) {
+                        this.commitPomodoro();
+                    } else {
+                        this.commitPause();
                     }
 
-                    this.timerInterval = setInterval(() => {
-                        if (this.timeInSeconds > 0) {
-                            this.timeInSeconds--
-                        } else {
-                            //Verifica qual Time acabou de ser executado.
-                            if (this.isRunningPomodoro) {
-                                this.commitPomodoro();
-                            } else if (this.isRunningPause) {
-                                this.commitPause();
-                            } else {
-                                this.commitPause();
-                            }
-                            this.endTime();
-                        }
-                    }, 1000);
-                }
+
+                });
             },
             pause() {
-                this.isRunning = false;
-                clearInterval(this.timerInterval);
-                this.timerInterval = null
+                this.easyTimer.pause();
+                this.isRunningButtonPause = true;
             },
             stop() {
-                this.pause();
-                this.isRunning = false;
+                this.easyTimer.stop();
+                this.$store.commit('setIsRunning', false);
                 this.isRunningPomodoro = false;
                 this.isRunningPause = false;
                 this.isRunningLongPause = false;
+                this.setPomodoro()
+            },
+            setPomodoro() {
+                if (this.isRunningPomodoro) {
+                    return;
+                }
+                this.isPomodoro = true;
+                this.isPause = false;
+                this.isLongPause = false;
+                let time = this.$store.getters.getTimePomodoro;
+                let split = time.split(':');
+                this.easyTimer = new Timer({
+                    countdown: true,
+                    startValues: {minutes: parseInt(split[0]), seconds: parseInt(split[1])}
+                });
+                this.mostrarTimer = this.easyTimer.getTimeValues().toString(['minutes', 'seconds']);
+            },
+            setPause() {
+                if (this.isRunningPause) {
+                    return;
+                }
+                this.isPause = true;
+                this.isPomodoro = false;
+                this.isLongPause = false;
+                let time = this.$store.getters.getTimePause;
+                let split = time.split(':');
+                this.easyTimer = new Timer({
+                    countdown: true,
+                    startValues: {minutes: parseInt(split[0]), seconds: parseInt(split[1])}
+                });
+                this.mostrarTimer = this.easyTimer.getTimeValues().toString(['minutes', 'seconds']);
+            },
+            setLongPause() {
+                if (this.isRunningLongPause) {
+                    return;
+                }
+                this.isLongPause = true;
+                this.isPause = false;
+                this.isPomodoro = false;
+                let time = this.$store.getters.getTimeLongPause;
+                let split = time.split(':');
+                this.easyTimer = new Timer({
+                    countdown: true,
+                    startValues: {minutes: parseInt(split[0]), seconds: parseInt(split[1])}
+                });
+                this.mostrarTimer = this.easyTimer.getTimeValues().toString(['minutes', 'seconds']);
+            },
+            commitPomodoro() {
+                this.isRunningPomodoro = false;
+                let qtdePomodoros = this.$store.getters.getQtdePomodoros;
+                this.$store.commit('setQtdePomodoros', ++qtdePomodoros);
+                this.$store.commit('setIsRunning', false);
+                this.setPomodoro();
+            },
+            commitPause() {
+                this.isRunningPause = false;
+                this.isRunningLongPause = false;
+                let qtdePauses = this.$store.getters.getQtdePauses;
+                this.$store.commit('setQtdePauses', ++qtdePauses);
                 this.$store.commit('setIsRunning', false);
                 this.setPomodoro()
+            },
+            chargeNewTimePomodoro() {
+                this.setPomodoro();
             },
             notification() {
                 Push.create("SEU TEMPO ACABOU!", {
@@ -133,62 +188,6 @@
                         this.close();
                     }
                 });
-            },
-            setPomodoro() {
-                if (this.isRunningPomodoro) {
-                    return;
-                }
-                this.isPomodoro = true;
-                this.isPause = false;
-                this.isLongPause = false;
-                this.formaterInSecondes(this.$store.getters.getTimePomodoro);
-            },
-            setPause() {
-                if (this.isRunningPause) {
-                    return;
-                }
-                this.isPause = true;
-                this.isPomodoro = false;
-                this.isLongPause = false;
-                this.formaterInSecondes(this.$store.getters.getTimePause);
-            },
-            setLongPause() {
-                if (this.isRunningLongPause) {
-                    return;
-                }
-                this.isLongPause = true;
-                this.isPause = false;
-                this.isPomodoro = false;
-                this.formaterInSecondes(this.$store.getters.getTimeLongPause);
-            },
-            formaterInSecondes(time) {
-                let split = time.split(':');
-                let minutes = split[0];
-                let secondes = split[1];
-                this.timeInSeconds = ((parseInt(minutes) * 60) + parseInt(secondes))
-            },
-            endTime() {
-                this.notification();
-                clearInterval(this.timerInterval);
-                this.stop();
-                this.isRunning = false;
-                this.$store.commit('setIsRunning', false);
-            },
-            chargeNewTimePomodoro() {
-                this.setPomodoro();
-            },
-            commitPomodoro() {
-                this.isRunningPomodoro = false;
-                let qtdePomodoros = this.$store.getters.getQtdePomodoros;
-                this.$store.commit('setQtdePomodoros', ++qtdePomodoros);
-                this.setPomodoro();
-            },
-            commitPause() {
-                this.isRunningPause = false;
-                this.isRunningLongPause = false;
-                let qtdePauses = this.$store.getters.getQtdePauses;
-                this.$store.commit('setQtdePauses', ++qtdePauses);
-                this.setPomodoro()
             }
         }
     }
