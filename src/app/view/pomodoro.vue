@@ -1,22 +1,26 @@
+import Push from "push.js";
 <template>
     <v-container>
         <v-row dense>
             <v-col cols="12" md="12">
-                <v-card-text>
-                    <p class="display-2 text--secondary">
-                        Ola {{getNameUser}}, vamos começar...
+                <v-card-text align="center">
+                    <p class="display-3 text--secondary">
+                        Pomodoro Timer
                     </p>
+                    <v-divider class="v-divider"></v-divider>
                 </v-card-text>
             </v-col>
         </v-row>
+
         <v-row dense>
             <v-col cols="12" md="6">
-                <timer></timer>
+                <timer ref="Timer"></timer>
             </v-col>
 
             <v-col cols="12" md="6">
-                <form1></form1>
+                <formm v-on:chargeNewTimePomodoro="chargeNewTime"></formm>
             </v-col>
+
             <v-card-text align="center">
                 <p class="display-2 text--secondary">
                     {{executeBigPause}}
@@ -27,36 +31,37 @@
 </template>
 
 <script>
-    import timer from "../components/timer";
-    import form from "../components/form";
+    import Timer from "../components/timer";
+    import Formm from "../components/form";
 
     export default {
         name: "pomodoro",
         data() {
             return {
-                nameUser: String,
+                newTime: String
             }
         },
         components: {
-            form1: form,
-            timer: timer,
+            Formm,
+            Timer
         },
         computed: {
-            getNameUser() {
-                return this.$store.getters.getNameUser;
-            },
             executeBigPause() {
                 let qtdePomodoros = this.$store.getters.getQtdePomodoros;
                 let nextPause = this.$store.getters.getNextPause;
                 if (qtdePomodoros === nextPause) {
-                    this.$store.commit('setTimePause', "10:00");
-                    return "É hora de você fazer uma pausa maior. Vá ao banheiro e tome uma água!"
+                    this.$store.commit('setNextPause', nextPause + 4);
+                    alert( "É HORA DE FAZER UMA PAUSA MAIOR, VOCÊ ESTÁ A MUITO TEMPO TRABALHANDO!");
+                    return ;
                 } else {
                     return "";
                 }
             }
         },
         methods: {
+            chargeNewTime() {
+                this.$refs.Timer.chargeNewTimePomodoro();
+            }
         }
     }
 </script>

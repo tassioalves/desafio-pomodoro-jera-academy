@@ -1,15 +1,16 @@
 export default {
     state: {
-        nameUser: "Visitante",
-        timePomodoro: "25:00",
-        timePause: "05:00",
+        timePomodoro: "00:05",
+        timePause: "00:02",
+        timeLongPause: "00:05",
         nextPause: 4,
         qtdePomodoros: 0,
-        qtdePauses: 0
+        qtdePauses: 0,
+        isRunning: false
     },
     getters: {
-        getNameUser: (state) => {
-            return state.nameUser;
+        getTimeLongPause: (state) => {
+            return state.timeLongPause;
         },
         getTimePomodoro: (state) => {
             return state.timePomodoro;
@@ -25,11 +26,14 @@ export default {
         },
         getQtdePauses: (state) => {
             return state.qtdePauses;
+        },
+        getIsRunning:(state)=>{
+            return state.isRunning;
         }
     },
     mutations: {
-        setNameUser: (state, nameUser) => {
-            state.nameUser = nameUser;
+        setTimeLongPause: (state, timeLongPause) => {
+            state.timeLongPause = timeLongPause;
         },
         setTimePomodoro: (state, timePomodoro) => {
             state.timePomodoro = timePomodoro;
@@ -45,11 +49,14 @@ export default {
         },
         setQtdePauses: (state, qtdePauses) => {
             state.qtdePauses = qtdePauses;
+        },
+        setIsRunning:(state, isRunning)=>{
+            state.isRunning = isRunning;
         }
     },
     actions: {
-        setNameUser({commit}, nameUser) {
-            commit('setNameUser', nameUser);
+        setTimeLongPause({commit}, timeLongPause) {
+            commit('setTimeLongPause', timeLongPause);
         },
         setTimePomodoro({commit}, timePomodoro) {
             commit('setTimePomodoro', timePomodoro);
@@ -65,6 +72,9 @@ export default {
         },
         setQtdePauses({commit}, qtdePausas) {
             commit('setQtdePausas', qtdePausas)
+        },
+        setIsRunning:({commit}, isRunning)=>{
+            commit('setIsRunning', isRunning)
         }
     }
 };

@@ -2,14 +2,14 @@
     <div id="app">
         <v-app>
           <barra-superior></barra-superior>
-            <v-content>
+            <v-main>
                 <v-container fluid>
                     <router-view></router-view>
                 </v-container>
-            </v-content>
-            <v-content>
+            </v-main>
+            <v-main>
                 <app-footer></app-footer>
-            </v-content>
+            </v-main>
         </v-app>
     </div>
 </template>

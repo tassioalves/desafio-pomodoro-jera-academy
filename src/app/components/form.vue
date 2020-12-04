@@ -1,22 +1,21 @@
 <template>
-    <v-card elevation="10" max-width="500" height="240" color="#FFFFFF">
-        <div class="container">
-            <v-row>
-                <v-col cols="6" lg="6">
-                    <v-form ref="form">
-                        <v-text-field type="time" v-model="newTimePomodoro"
-                                      label="Minutos do Pomodoro"></v-text-field>
-                        <v-btn rounded small color="green" dark class="float-right" @click="saveNewTimePomodoro">
-                            Salvar
-                        </v-btn>
-                    </v-form>
-                </v-col>
-                <v-col cols="6" lg="6" class="display-1">
-                    Pomodoros: {{pomodoros}} <br>
-                    Pausas: {{pauses}} <br>
-                </v-col>
-            </v-row>
-        </div>
+    <v-card elevation="10" max-width="800" color="#FFFFFF" class="pa-2">
+        <v-row dense class="pa-md-5 mx-lg-auto">
+            <v-col cols="12" md="12">
+                <v-form ref="form">
+                    <v-text-field type="time" v-model="newTimePomodoro"
+                                  label="Minutos do Pomodoro"></v-text-field>
+                    <v-btn rounded color="green" dark class="float-right" :disabled="show"
+                           @click="saveNewTimePomodoro">
+                        Salvar
+                    </v-btn>
+                </v-form>
+            </v-col>
+            <v-col cols="12" md="12" class="display-1">
+                Pomodoros hoje: {{qtdePomodoros}} <br>
+                Pausas hoje: {{qtdePauses}} <br>
+            </v-col>
+        </v-row>
     </v-card>
 </template>
 
@@ -32,14 +31,18 @@
             saveNewTimePomodoro() {
                 this.$store.commit('setTimePomodoro', this.newTimePomodoro);
                 this.newTimePomodoro = Object;
+                this.$emit('chargeNewTimePomodoro');
             }
         },
         computed: {
-            pauses() {
+            qtdePauses() {
                 return this.$store.getters.getQtdePauses;
             },
-            pomodoros() {
+            qtdePomodoros() {
                 return this.$store.getters.getQtdePomodoros;
+            },
+            show() {
+                return this.$store.getters.getIsRunning;
             }
         }
     }
