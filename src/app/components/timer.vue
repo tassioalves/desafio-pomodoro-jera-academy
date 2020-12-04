@@ -108,6 +108,7 @@
                 this.isRunningButtonPause = true;
             },
             stop() {
+                this.isRunningButtonPause = true;
                 this.easyTimer.stop();
                 this.$store.commit('setIsRunning', false);
                 this.isRunningPomodoro = false;
@@ -122,6 +123,7 @@
                 this.isPomodoro = true;
                 this.isPause = false;
                 this.isLongPause = false;
+                this.isRunningButtonPause = true;
                 let time = this.$store.getters.getTimePomodoro;
                 let split = time.split(':');
                 this.easyTimer = new Timer({
@@ -137,6 +139,7 @@
                 this.isPause = true;
                 this.isPomodoro = false;
                 this.isLongPause = false;
+                this.isRunningButtonPause = true;
                 let time = this.$store.getters.getTimePause;
                 let split = time.split(':');
                 this.easyTimer = new Timer({
