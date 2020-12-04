@@ -5,7 +5,7 @@ import Push from "push.js";
             <v-col cols="12" md="12">
                 <v-card-text align="center">
                     <p class="display-3 text--secondary">
-                        Pomodoro Timer
+                        Timer Pomodoro - Jera Academy
                     </p>
                     <v-divider class="v-divider"></v-divider>
                 </v-card-text>
@@ -51,8 +51,8 @@ import Push from "push.js";
                 let nextPause = this.$store.getters.getNextPause;
                 if (qtdePomodoros === nextPause) {
                     this.$store.commit('setNextPause', nextPause + 4);
-                    alert( "É HORA DE FAZER UMA PAUSA MAIOR, VOCÊ ESTÁ A MUITO TEMPO TRABALHANDO!");
-                    return ;
+                    alert("É HORA DE FAZER UMA PAUSA MAIOR, VOCÊ ESTÁ A MUITO TEMPO TRABALHANDO!");
+                    return;
                 } else {
                     return "";
                 }
